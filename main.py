@@ -6,9 +6,9 @@ import re
 import threading
 import time
 
-API_KEY = "{PUT-YOURS-HERE}"
-PROJECT_TOKEN = "{PUT-YOURS-HERE}"
-RUN_TOKEN = "{PUT-YOURS-HERE}"
+API_KEY = "th9Th5mTABuG"
+PROJECT_TOKEN = "tP3vuHaP36xS"
+RUN_TOKEN = "tJ8fJ_4sEPak"
 
 
 class Data:
@@ -57,25 +57,6 @@ class Data:
 
 		return countries
 
-	def update_data(self):
-		response = requests.post(f'https://www.parsehub.com/api/v2/projects/{self.project_token}/run', params=self.params)
-
-		def poll():
-			time.sleep(0.1)
-			old_data = self.data
-			while True:
-				new_data = self.get_data()
-				if new_data != old_data:
-					self.data = new_data
-					print("Data updated")
-					break
-				time.sleep(5)
-
-
-		t = threading.Thread(target=poll)
-		t.start()
-
-
 def speak(text):
 	engine = pyttsx3.init()
 	engine.say(text)
@@ -114,8 +95,6 @@ def main():
                     re.compile("[\w\s]+ deaths [\w\s]+"): lambda country: data.get_country_data(country)['total_deaths'],
 					}
 
-	UPDATE_COMMAND = "update"
-
 	while True:
 		print("Listening...")
 		text = get_audio()
@@ -134,10 +113,6 @@ def main():
 			if pattern.match(text):
 				result = func()
 				break
-
-		if text == UPDATE_COMMAND:
-			result = "Data is being updated. This may take a moment!"
-			data.update_data()
 
 		if result:
 			speak(result)
