@@ -3,8 +3,6 @@ import json
 import pyttsx3
 import speech_recognition as sr
 import re
-import threading
-import time
 
 API_KEY = "th9Th5mTABuG"
 PROJECT_TOKEN = "tP3vuHaP36xS"
